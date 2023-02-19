@@ -32,7 +32,12 @@ const fetchUsers = async (req, res) => {
 
 const getUsers = async (req, res) => {
   try {
-    let data = await userModel.find();
+    let {gender,limit=6,page=1}=req.query;
+    let payload={};
+    if(gender!=undefined){
+      payload.gender=gender
+    }
+    let data = await userModel.find(payload).limit(limit).skip((page-1)*limit);
     res.status(200).send({ msg: data });
   } catch (error) {
     res.status(500).send({ msg: error });
@@ -41,6 +46,7 @@ const getUsers = async (req, res) => {
 const delUsers=async(req,res)=>{
   try {
     await userModel.deleteMany({});
+    res.status(200).send({ msg: "All data deleted" });
   } catch (error) {
     res.status(500).send({ msg: error });
   }
