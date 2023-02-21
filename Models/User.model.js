@@ -5,7 +5,8 @@ const userSchema=mongoose.Schema({
     location:Object,
     email:String,
     phone:String,
-    picture:Object
+    picture:Object,
+    age:String
 })
 const userModel=mongoose.model("cointabuser",userSchema);
 module.exports=userModel;
